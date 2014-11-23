@@ -19,7 +19,7 @@ restrictedAcl.setPublicWriteAccess(false);
 /**
  * Global app configuration section
  */
-//app.set('views', 'cloud/views');  // Specify the folder to find templates
+app.set('views', 'cloud/views');  // Specify the folder to find templates
 app.set('view engine', 'ejs');    // Set the template engine
 app.use(express.bodyParser());    // Middleware for reading request body
 
@@ -99,6 +99,25 @@ function SendYo(yoUsername, yoLink, callback){
     callback();
   });
 }
+
+app.post('/addSubscriber', function(req, res) {
+  var listener = req.body.listenerTxt.toUpperCase();
+  var sender = req.body.senderTxt.toUpperCase();
+
+  var Subscribers = Parse.Object.extend("Subscribers");
+  var subscriber = new Subscribers();
+  subscriber.save({listener:listener,sender:sender}, {
+    success: function (data) {
+      //res.redirect('http://pickmeupyo.parseapp.com/#success');
+      res.render('success');
+    },
+    error: function (data, error) {
+      // The save failed.  Error is an instance of Parse.Error.
+      console.log(error);
+      res.redirect('http://pickmeupyo.parseapp.com/');
+    }
+  });
+});
 
 // Attach the Express app to your Cloud Code
 app.listen();
