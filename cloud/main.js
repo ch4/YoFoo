@@ -45,6 +45,7 @@ app.get('/incomingYo', function(req, res) {
   subscriberQuery.find({
     success: function(results) {
       var numResults = results.length;
+      console.log(results);
 
       results.forEach(function(subscriber) {
         SendYo(subscriber.get('listener'),uberLink,function(){
@@ -56,20 +57,20 @@ app.get('/incomingYo', function(req, res) {
       });
     },
     error: function(error) {
-      //alert("Error: " + error.code + " " + error.message);
+      alert("Error: " + error.code + " " + error.message);
       res.end();
     }
   });
 
 
-  var responseStr = 'username='+yoName+' location='+yoLatitude+','+yoLongitude+' link='+yoLink;
-  console.log(responseStr);
-  res.end(responseStr);
+  //var responseStr = 'username='+yoName+' location='+yoLatitude+','+yoLongitude+' link='+yoLink;
+  //console.log(responseStr);
+  //res.end(responseStr);
 });
 
 app.get('/outgoingYo', function(req, res) {
   var uberLink = 'uber://?client_id=jGHmeGpUbf7-dLOosaAEhM1uWek8xsRd&action=setPickup&pickup[latitude]=37.775818&pickup[longitude]=-122.418028&pickup[nickname]=UberHQ&pickup[formatted_address]=1455%20Market%20St%2C%20San%20Francisco%2C%20CA%2094103&dropoff[latitude]=37.802374&dropoff[longitude]=-122.405818&dropoff[nickname]=Coit%20Tower&dropoff[formatted_address]=1%20Telegraph%20Hill%20Blvd%2C%20San%20Francisco%2C%20CA%2094133&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d';
-  SendYo('ch4ch4', uberLink, function(){
+  SendYo('sasilukr', uberLink, function(){
     res.end();
   });
 });
