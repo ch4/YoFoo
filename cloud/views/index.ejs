@@ -28,7 +28,7 @@
 
         <!--<p>View internal page called <a href="#bar">bar</a></p>-->
         <form action="/addSubscriber" method="post">
-            <input type="text" placeholder="Kid's Yo!name" name="senderTxt">
+            <input type="text" placeholder="Child's Yo!name" name="senderTxt">
             <input type="text" placeholder="Parent's Yo!name" name="listenerTxt">
             <button type="submit" name="submitBtn">Submit</button>
         </form>
@@ -36,7 +36,11 @@
     <!-- /content -->
 
     <div data-role="footer">
-        <h4><a href="#">How do I use this?</a> </h4>
+        <h4><a data-rel="popup" href="#helpDiv">How do I use this?</a> </h4>
+        <div data-role="popup" id="helpDiv">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+            When your kids need to be picked up from soccer practice, they can just send a Yo to PICKMEUPYO with their location, and you receive a Yo that opens up the Uber app with their current location so that you can summon a driver to pick them up.
+        </div>
     </div>
     <!-- /footer -->
 </div>
@@ -58,7 +62,11 @@
     <!-- /content -->
 
     <div data-role="footer">
-        <h4><a href="#">How do I use this?</a> </h4>
+        <h4><a data-rel="popup" href="#helpDiv">How do I use this?</a> </h4>
+        <div data-role="popup" id="helpDiv">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+            When your kids need to be picked up from soccer practice, they can just send a Yo to PICKMEUPYO with their location, and you receive a Yo that opens up the Uber app with their current location so that you can summon a driver to pick them up.
+        </div>
     </div>
     <!-- /footer -->
 </div>
