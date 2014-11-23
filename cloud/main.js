@@ -28,10 +28,38 @@ app.get('/incomingYo', function(req, res) {
   var yoName = req.query.username; //ch4ch4
   var yoLink = req.query.link; //http://harveychan.net
   //var tempLocation = req.params.location; //42.360091;-71.09415999999999
+  var yoLatitude = '';
+  var yoLongitude = '';
+  var uberLink = '';
   if(req.query.location){
-    var yoLatitude = (req.query.location.split(';'))[0];
-    var yoLongitude = (req.query.location.split(';'))[1];
+    yoLatitude = (req.query.location.split(';'))[0];
+    yoLongitude = (req.query.location.split(';'))[1];
+    uberLink = 'uber://?client_id=jGHmeGpUbf7-dLOosaAEhM1uWek8xsRd&action=setPickup&pickup[latitude]='+yoLatitude+'&pickup[longitude]='+yoLongitude+'&pickup[nickname]='+yoName+'&dropoff[latitude]='+yoLatitude+'&dropoff[longitude]='+yoLongitude+'&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d';
   }
+
+  Parse.Cloud.useMasterKey();
+  var Subscribers = Parse.Object.extend('Subscribers');
+  var subscriberQuery = new Parse.Query(Subscribers);
+
+  subscriberQuery.equalTo('sender', yoName);
+  subscriberQuery.find({
+    success: function(results) {
+      var numResults = results.length;
+
+      results.forEach(function(subscriber) {
+        SendYo(subscriber.get('listener'),uberLink,function(){
+          numResults = numResults - 1;
+          if(numResults < 1){
+            res.end();
+          }
+        })
+      });
+    },
+    error: function(error) {
+      //alert("Error: " + error.code + " " + error.message);
+      res.end();
+    }
+  });
 
 
   var responseStr = 'username='+yoName+' location='+yoLatitude+','+yoLongitude+' link='+yoLink;
@@ -43,7 +71,7 @@ app.get('/outgoingYo', function(req, res) {
   var uberLink = 'uber://?client_id=jGHmeGpUbf7-dLOosaAEhM1uWek8xsRd&action=setPickup&pickup[latitude]=37.775818&pickup[longitude]=-122.418028&pickup[nickname]=UberHQ&pickup[formatted_address]=1455%20Market%20St%2C%20San%20Francisco%2C%20CA%2094103&dropoff[latitude]=37.802374&dropoff[longitude]=-122.405818&dropoff[nickname]=Coit%20Tower&dropoff[formatted_address]=1%20Telegraph%20Hill%20Blvd%2C%20San%20Francisco%2C%20CA%2094133&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d';
   SendYo('ch4ch4', uberLink, function(){
     res.end();
-  })
+  });
 });
 
 function SendYo(yoUsername, yoLink, callback){
