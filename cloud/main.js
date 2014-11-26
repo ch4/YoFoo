@@ -34,7 +34,7 @@ app.get('/incomingYo', function(req, res) {
   if(req.query.location){
     yoLatitude = (req.query.location.split(';'))[0];
     yoLongitude = (req.query.location.split(';'))[1];
-    uberLink = 'uber://?client_id=jGHmeGpUbf7-dLOosaAEhM1uWek8xsRd&action=setPickup&pickup[latitude]='+yoLatitude+'&pickup[longitude]='+yoLongitude+'&pickup[nickname]='+yoName+'&dropoff[latitude]='+yoLatitude+'&dropoff[longitude]='+yoLongitude+'&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d';
+    uberLink = 'uber://?client_id=jGHmeGpUbf7-dLOosaAEhM1uWek8xsRd&action=setPickup&pickup[latitude]='+yoLatitude+'&pickup[longitude]='+yoLongitude+'&pickup[nickname]='+yoName+'&dropoff[latitude]='+yoLatitude+'&dropoff[longitude]='+yoLongitude+'&dropoff[nickname]='+yoName+'&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d';
   }
 
   Parse.Cloud.useMasterKey();
